@@ -1,0 +1,97 @@
+object CustomFormatsForm: TCustomFormatsForm
+  Left = 324
+  Height = 374
+  Top = 32
+  Width = 582
+  Caption = 'Custom Quality Format String'
+  ClientHeight = 374
+  ClientWidth = 582
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '3.8.0.0'
+  object StringGrid1: TStringGrid
+    Left = 2
+    Height = 304
+    Top = 0
+    Width = 580
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    AutoFillColumns = True
+    ColCount = 3
+    Columns = <    
+      item
+        SizePriority = 2
+        Title.Caption = 'Custom Format String'
+        Width = 277
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 277
+      end>
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goRowSelect, goSmoothScroll, goFixedRowNumbering, goRowHighlight]
+    RowCount = 13
+    TabOrder = 0
+    OnDrawCell = StringGrid1DrawCell
+    OnSetEditText = StringGrid1SetEditText
+    ColWidths = (
+      22
+      277
+      277
+    )
+    Cells = (
+      2
+      0
+      0
+      'Id'
+      1
+      0
+      'Custom Formst String'
+    )
+  end
+  object btnDone: TButton
+    Left = 2
+    Height = 36
+    Top = 336
+    Width = 440
+    Anchors = [akLeft, akBottom]
+    Caption = 'Save and Exit'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    OnClick = btnDoneClick
+  end
+  object StaticTextURL: TStaticText
+    Left = 109
+    Height = 19
+    Top = 310
+    Width = 384
+    Anchors = [akLeft, akBottom]
+    Caption = 'https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#format-selection'
+    Color = clHighlight
+    Font.Color = clHighlight
+    Font.Style = [fsUnderline]
+    ParentFont = False
+    ParentColor = False
+    TabOrder = 2
+  end
+  object btnAddRows: TButton
+    Left = 448
+    Height = 36
+    Top = 336
+    Width = 128
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Add Rows'
+    Color = clWindowText
+    Font.Color = clHighlight
+    ParentFont = False
+    TabOrder = 3
+    OnClick = btnAddRowsClick
+  end
+  object Label1: TLabel
+    Left = 13
+    Height = 15
+    Top = 310
+    Width = 89
+    Anchors = [akLeft, akBottom]
+    Caption = 'Documentation: '
+  end
+end

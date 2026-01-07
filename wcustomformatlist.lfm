@@ -1,0 +1,35 @@
+object CustomFormatList: TCustomFormatList
+  Left = 0
+  Height = 423
+  Top = 0
+  Width = 470
+  ClientHeight = 423
+  ClientWidth = 470
+  DesignTimePPI = 120
+  ParentFont = False
+  DesignLeft = 324
+  DesignTop = 32
+  object StringGrid1: TStringGrid
+    Left = 8
+    Height = 256
+    Top = 8
+    Width = 336
+    ColCount = 3
+    RowCount = 12
+    TabOrder = 0
+    ColWidths = (
+      23
+      153
+      132
+    )
+    Cells = (
+      2
+      1
+      0
+      'Custom Format String'
+      2
+      0
+      'Description'
+    )
+  end
+end

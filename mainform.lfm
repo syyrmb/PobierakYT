@@ -1,0 +1,118 @@
+object Form1: TForm1
+  Left = 539
+  Height = 600
+  Top = 23
+  Width = 1096
+  HorzScrollBar.Page = 614
+  VertScrollBar.Page = 78
+  AutoScroll = True
+  Caption = 'PobierakYT'
+  ClientHeight = 600
+  ClientWidth = 1096
+  Color = clForm
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  LCLVersion = '3.8.0.0'
+  object PageControl1: TPageControl
+    Left = 26
+    Height = 582
+    Top = 6
+    Width = 494
+    ActivePage = TabVideos2
+    Anchors = [akTop, akLeft, akBottom]
+    TabIndex = 1
+    TabOrder = 0
+    object TabSingleVideo: TTabSheet
+      Caption = 'Empty'
+      ParentFont = False
+    end
+    object TabVideos2: TTabSheet
+      Caption = 'Video'
+      ParentFont = False
+    end
+    object TabSubtitles2: TTabSheet
+      Caption = 'Subtitles'
+    end
+    object TabOptions2: TTabSheet
+      Caption = 'Options'
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 577
+    Width = 1096
+    Color = clGradientInactiveCaption
+    Font.Color = clCaptionText
+    Panels = <>
+    ParentColor = False
+    ParentFont = False
+  end
+  object PageControlConsole: TPageControl
+    Left = 518
+    Height = 577
+    Top = 0
+    Width = 578
+    ActivePage = ConsoleTab
+    Align = alRight
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    AutoSize = True
+    MultiLine = True
+    ParentFont = False
+    TabIndex = 0
+    TabOrder = 2
+    Options = [nboShowCloseButtons, nboMultiLine]
+    object ConsoleTab: TTabSheet
+      Tag = -1
+      Caption = 'Console'
+      ClientHeight = 549
+      ClientWidth = 570
+      Font.Color = clLime
+      Font.Style = [fsBold]
+      ParentFont = False
+      object Memo1: TMemo
+        AnchorSideBottom.Side = asrBottom
+        Left = 0
+        Height = 522
+        Top = 0
+        Width = 572
+        Align = alCustom
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Color = clWindowText
+        Font.CharSet = EASTEUROPE_CHARSET
+        Font.Color = clWhite
+        Font.Height = -13
+        Font.Name = 'Consolas'
+        Font.Pitch = fpFixed
+        Font.Quality = fqDraft
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+      end
+    end
+  end
+  object btnClearTabMemo: TButton
+    Left = 518
+    Height = 26
+    Top = 550
+    Width = 96
+    Anchors = [akLeft, akBottom]
+    Caption = 'Clear Output'
+    TabOrder = 3
+    OnClick = btnClearTabMemoClick
+  end
+  object btnCloseTab: TButton
+    Left = 984
+    Height = 26
+    Top = 550
+    Width = 109
+    Anchors = [akRight, akBottom]
+    Caption = 'Close Tab'
+    TabOrder = 4
+    OnClick = btnCloseTabClick
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 461
+    Top = 621
+  end
+end
