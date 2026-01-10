@@ -260,8 +260,8 @@ begin
   begin
     g_PobierakSettings.s_UseCustomOutput := chboxOutputFile.Checked;
   end
-  else if (not g_PobierakSettings.s_UseCustomOutput) then
-  begin // When list is empty turn option off
+  else
+  begin
     g_PobierakSettings.s_UseCustomOutput := false;
   end;
 

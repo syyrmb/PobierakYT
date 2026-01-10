@@ -81,7 +81,8 @@ begin
   g_PobierakSettings.UpdateComboBox_WithCFA(cmbboxCustomCommands,g_PobierakSettings.s_CustomCommandsStrings);
 
   //TESTING PURPOSE
-  // EditVideoURL.Text := 'https://www.youtube.com/watch?v=C0DPdy98e4c';
+   //EditVideoURL.Text := 'https://www.youtube.com/watch?v=C0DPdy98e4c';
+   EditVideoURL.Text :='https://www.youtube.com/watch?v=UEQSkaqrMZA;'
 end;
 
 procedure TVideosFrame.radioExpertChange(Sender: TObject);

@@ -4,6 +4,7 @@ unit pobierak.Engine;
 
 {$mode ObjFPC}{$H+}
 
+
 interface
 
 uses
@@ -27,7 +28,7 @@ type
   TJobTabArray = array of TJobTab;
 
 const
-  COLLAPSE_PATTERS_ARR: array[0..0] of string = ('(?m)\[download\]\s+\d+(\.\d+)?% of.*?$');
+  COLLAPSE_PATTERS_ARR: array[0..0] of string = ('(?m)\[download\]\s+\d+(\.\d+)?% of.*ETA.*?$');
 
 
 var

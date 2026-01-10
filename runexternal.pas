@@ -7,7 +7,8 @@ unit RunExternal;
 interface
 
 uses
-  {$ifdef unix}cthreads,{$endif} Classes, SysUtils, Process, Dialogs, debugUtils;
+  {$ifdef unix}cthreads,{$endif} Classes, SysUtils, Process, Dialogs, debugUtils,
+  killprocesstree;
 {TO DO:
  *   procedure Run(); change to func():boolean ,with check if exe file exist.
 
@@ -114,7 +115,7 @@ begin
 
   _Proc.Executable := path; // path to executable
   _Proc.Parameters.Add(args); // arguments of executable
-  _Proc.Options := [poUsePipes, poStderrToOutPut]; // options config to output data to pipe
+  _Proc.Options := [poUsePipes, poStderrToOutPut,poNewProcessGroup]; // options config to output data to pipe
   _Proc.ShowWindow := swoHide; // run executable in the background
 
   StreamPosTracker := 0;
@@ -131,6 +132,7 @@ begin
     _Stream.Free();
 
     _Proc.Free();
+    KillProcTree(_Proc); // This is needed to kill ffmpg if it's in the middle of work
     _Thread.Free();
 
     DoneCriticalsection(_CriticalSection);

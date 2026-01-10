@@ -16,7 +16,8 @@ interface
 
 uses
   {$ifdef unix}cthreads,{$endif} Classes, SysUtils, StdCtrls, RegExpr, ComCtrls, Dialogs, LazUTF8,
-  RunExternal, pobierak.settings, copyttab;
+  RunExternal, pobierak.settings,
+  Windows,Messages;
 
 type
   TRegexStringsArray = array of string;
@@ -38,17 +39,20 @@ type
     _page :TTabSheet;
   ////////////////////////
 
-
     RE: TRunExternal;
 
     // regex pattern to replace matching previous line with new line. Ex. for download % lines.
     _RegexLinePatters: array of TRegExpr;
+
     _IdxOfPreviousPatternMatch: integer; // index of _RegexLinePatters that matched last buffer text
     _LastBufferStart: integer;
+    __DoReplaceBuffer: boolean;
+    __TextToAdd : string;
 
     procedure setLinePatternToCollapse(patterns: TRegexStringsArray);
 
     procedure PrintBuffer(const buffer: string);
+    procedure AppendBufferInMainThread();
 
 
   end;
@@ -94,20 +98,35 @@ begin
   inherited Destroy;
 end;
 
+procedure TMemoThr.AppendBufferInMainThread();
+begin
+  MyMemo.Lines.BeginUpdate();
+   if (self.__DoReplaceBuffer) then
+   begin
+
+     if MyMemo.Lines.Count > 0 then
+        MyMemo.Lines[MyMemo.Lines.Count - 1] := __TextToAdd
+     else
+        MyMemo.Lines.Append(self.__TextToAdd);
+   end
+   else begin
+      MyMemo.Lines.Append(self.__TextToAdd);
+   end;
+  MyMemo.Lines.EndUpdate();
+end;
+
 procedure TMemoThr.PrintBuffer(const buffer: string);
 var
-  WasScrolledToBottom: boolean;
-  OldScrollPosition: integer;
   IdxOfCurrentPatternMatch: integer;
   i: integer;
   ConvertedBuffer: string;
-  lastRegexMatch, oldMemoText: string;
+  lastRegexMatch: string;
 begin
 
   ConvertedBuffer := WinCPToUTF8(buffer);
 
 
-  // Checking if buffer matches collapse line pattern
+  // Checking if buffer matches line pattern to collapse. If matches many lines return only latest match
   lastRegexMatch := '';
   IdxOfCurrentPatternMatch := -1;
   for i := 0 to High(Self._RegexLinePatters) do
@@ -125,44 +144,16 @@ begin
     end;
   end;
 
-  if ((IdxOfCurrentPatternMatch > -1)
-     and (self._IdxOfPreviousPatternMatch = IdxOfCurrentPatternMatch))
-  then
-  begin
-    oldMemoText := Copy(MyMemo.Text, 1, self._LastBufferStart); // memo text without deleted previous buffer
-  end
-  else
-  begin
-    oldMemoText := MyMemo.Text;
-  end;
+    // fixing new line sign
+  ConvertedBuffer := StringReplace(ConvertedBuffer, #10, #13#10, [rfReplaceAll]);
+  ConvertedBuffer := StringReplace(ConvertedBuffer, #13#13#10, #13#10, [rfReplaceAll]);
 
+
+  self.__TextToAdd:=ConvertedBuffer;
+  self.__DoReplaceBuffer:= ((IdxOfCurrentPatternMatch > -1) and (self._IdxOfPreviousPatternMatch = IdxOfCurrentPatternMatch)) ;
   self._IdxOfPreviousPatternMatch := IdxOfCurrentPatternMatch;
-  self._LastBufferStart := Length(oldMemoText); // len of memo text without out new buffer
 
-  // Finding out if user scrolled to bottom
-  WasScrolledToBottom := (MyMemo.VertScrollBar.Position >=
-    (MyMemo.VertScrollBar.Range - MyMemo.VertScrollBar.Page - 1));
-  if MyMemo.Lines.Count = 0 then
-    WasScrolledToBottom := True;
-
-  if not WasScrolledToBottom then
-    OldScrollPosition := MyMemo.VertScrollBar.Position;
-
-  // Printing buffer
-  //  yt-dlp output is encoded in local CodePage, so must be converted
-  MyMemo.Text := oldMemoText + ConvertedBuffer;
-
-
-  // Scrolling to proper position
-  if (WasScrolledToBottom) then
-  begin  // Scrolling to bottom
-    MyMemo.SelStart := Length(MyMemo.Text);
-    MyMemo.SelLength := 0; // Clear any selection
-  end
-  else
-  begin   // Scrolling to last position ( DOESN'T WORK, BLAME LAZARUS )
-    MyMemo.VertScrollBar.Position := OldScrollPosition;
-  end;
+  TThread.Queue(nil,@Self.AppendBufferInMainThread);
 
 end;
 
