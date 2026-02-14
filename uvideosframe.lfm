@@ -1,11 +1,13 @@
 object VideosFrame: TVideosFrame
   Left = 0
-  Height = 586
+  Height = 732
   Top = 0
-  Width = 502
-  ClientHeight = 586
-  ClientWidth = 502
+  Width = 628
+  Anchors = [akTop, akLeft, akRight, akBottom]
+  ClientHeight = 732
+  ClientWidth = 628
   Color = clCream
+  DesignTimePPI = 120
   ParentBackground = False
   ParentColor = False
   ParentFont = False
@@ -13,11 +15,11 @@ object VideosFrame: TVideosFrame
   DesignLeft = 469
   DesignTop = 97
   object EditVideoURL: TEdit
-    Left = 20
-    Height = 23
+    Left = 25
+    Height = 28
     Hint = 'Paste video url, playlist url or channel url'
-    Top = 19
-    Width = 365
+    Top = 24
+    Width = 456
     ParentShowHint = False
     ShowHint = True
     TabOrder = 0
@@ -25,39 +27,39 @@ object VideosFrame: TVideosFrame
     OnClick = EditVideoURLClick
   end
   object btnDownload: TButton
-    Left = 394
-    Height = 58
-    Top = 19
-    Width = 77
+    Left = 492
+    Height = 72
+    Top = 24
+    Width = 96
     Caption = 'Download !'
     TabOrder = 1
     OnClick = btnDownloadClick
   end
   object btnGetInfo: TButton
-    Left = 19
-    Height = 26
-    Top = 51
-    Width = 96
+    Left = 24
+    Height = 32
+    Top = 64
+    Width = 120
     Caption = 'Get Video Info'
     ParentFont = False
     TabOrder = 2
     OnClick = btnGetInfoClick
   end
   object GroupBoxQuality: TGroupBox
-    Left = 19
-    Height = 243
-    Top = 88
-    Width = 454
+    Left = 24
+    Height = 304
+    Top = 110
+    Width = 568
     Caption = 'Video quality option'
-    ClientHeight = 223
-    ClientWidth = 450
+    ClientHeight = 279
+    ClientWidth = 564
     ParentBackground = False
     TabOrder = 3
     object radioQuick: TRadioButton
-      Left = 13
-      Height = 19
-      Top = 12
-      Width = 49
+      Left = 16
+      Height = 24
+      Top = 15
+      Width = 58
       Caption = 'Quick'
       Checked = True
       TabOrder = 1
@@ -65,32 +67,32 @@ object VideosFrame: TVideosFrame
       OnChange = radioQuickChange
     end
     object radioAdvanced: TRadioButton
-      Left = 13
-      Height = 19
-      Top = 83
-      Width = 71
+      Left = 16
+      Height = 24
+      Top = 104
+      Width = 87
       Caption = 'Advanced'
       TabOrder = 0
       OnChange = radioAdvancedChange
     end
     object GroupBox2: TGroupBox
-      Left = 114
-      Height = 58
-      Top = 12
-      Width = 286
+      Left = 142
+      Height = 72
+      Top = 15
+      Width = 358
       Caption = 'Quick settings'
-      ClientHeight = 38
-      ClientWidth = 282
+      ClientHeight = 47
+      ClientWidth = 354
       Color = clCream
       ParentBackground = False
       ParentColor = False
       TabOrder = 2
       object cmbboxQuickQuality: TComboBox
-        Left = 6
-        Height = 23
-        Top = 6
-        Width = 262
-        ItemHeight = 15
+        Left = 8
+        Height = 28
+        Top = 8
+        Width = 328
+        ItemHeight = 20
         Items.Strings = (
           'Highest Quality'
           '1080p (if avalaible)'
@@ -107,40 +109,40 @@ object VideosFrame: TVideosFrame
       end
     end
     object GroupBox3: TGroupBox
-      Left = 114
-      Height = 51
-      Top = 83
-      Width = 288
+      Left = 142
+      Height = 64
+      Top = 104
+      Width = 360
       Caption = 'Advanced quality settings'
-      ClientHeight = 31
-      ClientWidth = 284
+      ClientHeight = 39
+      ClientWidth = 356
       Color = clForm
       Enabled = False
       ParentBackground = False
       ParentColor = False
       TabOrder = 3
       object edtFormatNumV: TEdit
-        Left = 24
-        Height = 23
+        Left = 30
+        Height = 28
         Hint = 'Video format ID'
         Top = 0
-        Width = 53
+        Width = 66
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
       end
       object edtFormatNumA: TEdit
-        Left = 104
-        Height = 23
+        Left = 130
+        Height = 28
         Hint = 'Audio format ID'
         Top = 0
-        Width = 56
+        Width = 70
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
       end
       object Label1: TLabel
-        Left = 5
+        Left = 6
         Height = 21
         Top = 0
         Width = 15
@@ -150,7 +152,7 @@ object VideosFrame: TVideosFrame
         ParentFont = False
       end
       object Label2: TLabel
-        Left = 85
+        Left = 106
         Height = 21
         Top = 0
         Width = 15
@@ -161,23 +163,23 @@ object VideosFrame: TVideosFrame
       end
     end
     object radioExpert: TRadioButton
-      Left = 12
-      Height = 19
-      Top = 147
-      Width = 51
+      Left = 15
+      Height = 24
+      Top = 184
+      Width = 63
       Caption = 'Expert'
       TabOrder = 4
       OnChange = radioExpertChange
     end
     object GroupBox4: TGroupBox
-      Left = 115
-      Height = 69
+      Left = 144
+      Height = 86
       Hint = 'Create a custom format string. It will be run with -f operator. Put it inside " ". '#13#10'You can add -S (sort) option afterwards, e.x.:  '#13#10'"bestaudio[abr>=128]" -S +size,-abr   '#13#10'(this picks the smallest file with a bitrate of at least 128)'
-      Top = 147
-      Width = 286
+      Top = 184
+      Width = 358
       Caption = 'Custom Quality Format String'
-      ClientHeight = 49
-      ClientWidth = 282
+      ClientHeight = 61
+      ClientWidth = 354
       Color = clForm
       Enabled = False
       ParentBackground = False
@@ -186,158 +188,158 @@ object VideosFrame: TVideosFrame
       ShowHint = True
       TabOrder = 5
       object cmbboxCustomQuality: TComboBox
-        Left = 6
-        Height = 23
-        Top = 24
-        Width = 262
-        ItemHeight = 15
+        Left = 8
+        Height = 28
+        Top = 30
+        Width = 328
+        ItemHeight = 20
         ReadOnly = True
         TabOrder = 0
       end
       object btnEditAVList: TButton
-        Left = 172
-        Height = 22
+        Left = 215
+        Height = 28
         Top = 0
-        Width = 96
+        Width = 120
         Caption = 'Edit List'
         TabOrder = 1
         OnClick = btnEditAVListClick
       end
     end
     object btnFormatData: TButton
-      Left = 288
-      Height = 26
-      Top = 99
-      Width = 96
+      Left = 360
+      Height = 32
+      Top = 124
+      Width = 120
       Caption = 'Get Format List'
       TabOrder = 6
       OnClick = btnFormatDataClick
     end
   end
   object GroupBoxCustom: TGroupBox
-    Left = 19
-    Height = 50
+    Left = 24
+    Height = 62
     Hint = 'Add your custom command, which will be appended to the arguments list.'
-    Top = 496
-    Width = 452
+    Top = 620
+    Width = 565
     Caption = 'Add custom parameters to yt-dlp command:'
-    ClientHeight = 30
-    ClientWidth = 448
+    ClientHeight = 37
+    ClientWidth = 561
     Enabled = False
     ParentBackground = False
     ParentShowHint = False
     ShowHint = True
     TabOrder = 4
     object btnEditCommandsList: TButton
-      Left = 368
-      Height = 23
-      Top = 6
-      Width = 75
+      Left = 461
+      Height = 28
+      Top = 8
+      Width = 91
       Align = alCustom
       Caption = 'Edit List'
       TabOrder = 0
       OnClick = btnEditCommandsListClick
     end
     object cmbboxCustomCommands: TComboBox
-      Left = 38
-      Height = 23
-      Top = 6
-      Width = 314
-      ItemHeight = 15
+      Left = 48
+      Height = 28
+      Top = 8
+      Width = 392
+      ItemHeight = 20
       ReadOnly = True
       TabOrder = 1
     end
   end
   object chboxCustomArgs: TCheckBox
-    Left = 34
-    Height = 17
-    Top = 525
-    Width = 18
+    Left = 42
+    Height = 20
+    Top = 656
+    Width = 21
     TabOrder = 5
     OnChange = chboxCustomArgsChange
   end
   object GroupBoxFragments: TGroupBox
-    Left = 19
-    Height = 154
-    Top = 336
-    Width = 452
+    Left = 24
+    Height = 192
+    Top = 420
+    Width = 565
     Caption = 'Download fragment [hh:mm:ss]'
-    ClientHeight = 134
-    ClientWidth = 448
+    ClientHeight = 167
+    ClientWidth = 561
     Color = clCream
     ParentBackground = False
     ParentColor = False
     TabOrder = 6
     object chboxFragment: TCheckBox
-      Left = 13
-      Height = 17
-      Top = 14
-      Width = 18
+      Left = 16
+      Height = 20
+      Top = 18
+      Width = 21
       TabOrder = 0
     end
     object edtTimeFrom: TEdit
-      Left = 64
-      Height = 23
-      Top = 14
-      Width = 51
+      Left = 80
+      Height = 28
+      Top = 18
+      Width = 64
       TabOrder = 1
       Text = '00:00:00'
     end
     object edtTimeTo: TEdit
-      Left = 141
-      Height = 23
-      Top = 14
-      Width = 51
+      Left = 176
+      Height = 28
+      Top = 18
+      Width = 64
       TabOrder = 2
       Text = '00:00:00'
     end
     object Label3: TLabel
-      Left = 32
-      Height = 15
-      Top = 16
-      Width = 28
+      Left = 40
+      Height = 20
+      Top = 20
+      Width = 34
       Caption = 'From'
       ParentColor = False
     end
     object Label4: TLabel
-      Left = 122
-      Height = 15
-      Top = 16
-      Width = 12
+      Left = 152
+      Height = 20
+      Top = 20
+      Width = 16
       Caption = 'To'
       ParentColor = False
     end
     object chboxForceKeyFrames: TCheckBox
-      Left = 251
-      Height = 19
+      Left = 314
+      Height = 24
       Hint = 'Optional: Force keyframes on cuts to improve artifacts. Slow.'
-      Top = 11
-      Width = 150
+      Top = 14
+      Width = 187
       Caption = 'Force Keyframes (slower)'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
     end
     object chboxByChapter: TCheckBox
-      Left = 13
-      Height = 19
-      Top = 45
-      Width = 263
+      Left = 16
+      Height = 24
+      Top = 56
+      Width = 328
       Caption = 'By chapters'' names:  (REGEX, separated by ";" )'
       TabOrder = 4
     end
     object edtChapters: TEdit
-      Left = 13
-      Height = 23
-      Top = 70
-      Width = 429
+      Left = 16
+      Height = 28
+      Top = 88
+      Width = 536
       TabOrder = 5
     end
     object chboxSplitChapters: TCheckBox
-      Left = 13
-      Height = 19
-      Top = 102
-      Width = 296
+      Left = 16
+      Height = 24
+      Top = 128
+      Width = 374
       Caption = 'Download with chapters separated into different files'
       TabOrder = 6
     end

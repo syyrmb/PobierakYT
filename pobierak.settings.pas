@@ -172,11 +172,29 @@ end;
 procedure TMySettings._ReadFromINI(iniPath: string);
 var
   Ini: TIniFile;
+  tempPath: string;
 begin
   Ini := TIniFile.Create(iniPath);
-  s_YTdl_PATH := Ini.ReadString('Main', 'YTdl_PATH', '');
-  s_FFMPG_FOLDER := Ini.ReadString('Main', 'FFMPG_FOLDER', '');
-  s_OutputFolder := Ini.ReadString('Main', 'OutputFolder', '');
+  
+  tempPath := Ini.ReadString('Main', 'YTdl_PATH', '');
+  if FileExists(tempPath) then
+	s_YTdl_PATH := tempPath
+  else
+	ShowMessage('File yt-dlp: '+tempPath+' does not exist!');
+	
+  tempPath := Ini.ReadString('Main', 'FFMPG_FOLDER', '');
+  if DirectoryExists(tempPath) then
+	s_FFMPG_FOLDER := tempPath
+  else
+	ShowMessage('Directory FFMG '+tempPath+' does not exist!');
+	
+  tempPath := Ini.ReadString('Main', 'OutputFolder', '');
+  if DirectoryExists(tempPath) then
+	s_OutputFolder := tempPath
+  else
+	ShowMessage('Directory output '+tempPath+' does not exist!');
+  
+
   s_CustomOutputIdx := Ini.ReadInteger ('Main', 'CustomOutputIdx', -1);
   s_UseCustomOutput := Ini.ReadBool ('Main', 'UseCustomOutput', False);
   Ini.Free();
@@ -251,7 +269,8 @@ begin
 end;
 
 procedure TMySettings._SaveCustomFormats(const iniPath: string;
-  const sectionName: string; var arr: TCustomFormatArray);
+  const sectionName: string; 
+  var arr: TCustomFormatArray);
 var
   i: integer;
   section: string;

@@ -1,0 +1,30 @@
+# disallow all, unblock root folder
+*
+!*/
+
+
+# whitelist
+!*.pas
+!*.lfm
+!*.lpr
+!*.lpi
+!*.res
+!*.ico
+
+!README.md
+!COPYING.txt
+!open-folder-small.png
+
+!copy.gitignore
+
+!*/readme/
+!*/readme/**
+
+!advScreen.png
+!frontScreen.png
+
+# blacklist
+lib/**
+backup/**
+PobierakYT_Settings.ini
+PobierakYT.exe

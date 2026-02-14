@@ -28,7 +28,10 @@ type
   TJobTabArray = array of TJobTab;
 
 const
-  COLLAPSE_PATTERS_ARR: array[0..0] of string = ('(?m)\[download\]\s+\d+(\.\d+)?% of.*ETA.*?$');
+  COLLAPSE_PATTERS_ARR: array[0..1] of string = (
+                        '(?m)^\[download\][^\r\n]*ETA[^\r\n]*$'
+                        ,'(?m)^frame=[^\r\n]*elapsed=[^\r\n]*$'
+);
 
 
 var

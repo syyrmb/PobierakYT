@@ -7,7 +7,7 @@ unit RunExternal;
 interface
 
 uses
-  {$ifdef unix}cthreads,{$endif} Classes, SysUtils, Process, Dialogs, debugUtils,
+  {$ifdef unix}cthreads,{$endif} Classes, SysUtils, Process, Dialogs,
   killprocesstree;
 {TO DO:
  *   procedure Run(); change to func():boolean ,with check if exe file exist.

@@ -31,7 +31,7 @@ type
     MyMemo: Tmemo;
     isTaskFinished: boolean; // flag for external use
 
-    function _DebugState(ShowMessage: boolean): string;
+    function _DebugState(doShowMessage: boolean): string;
     procedure StopAndTerminate();
 
   private
@@ -45,7 +45,7 @@ type
     _RegexLinePatters: array of TRegExpr;
 
     _IdxOfPreviousPatternMatch: integer; // index of _RegexLinePatters that matched last buffer text
-    _LastBufferStart: integer;
+    _LastBufferLineNumber: integer;
     __DoReplaceBuffer: boolean;
     __TextToAdd : string;
 
@@ -75,10 +75,10 @@ constructor TMemoThr.Create(var Memo: Tmemo; var RunExternal: TRunExternal);
 begin
   inherited Create(True);
   RE := RunExternal;
-  MyMemo := Memo;
+  self.MyMemo := Memo;
   isTaskFinished := False;
   FreeOnTerminate := True;
-  MyMemo.Lines.Options := [];
+  self.MyMemo.Lines.Options := [];
 end;
 
 destructor TMemoThr.Destroy();
@@ -99,20 +99,28 @@ begin
 end;
 
 procedure TMemoThr.AppendBufferInMainThread();
+var thisLine,i:integer;
 begin
-  MyMemo.Lines.BeginUpdate();
-   if (self.__DoReplaceBuffer) then
+  self.MyMemo.Lines.BeginUpdate();
+  thisLine := self.MyMemo.Lines.Count;
+   if (self.__DoReplaceBuffer)and( self.MyMemo.Lines.Count > 0) then
    begin
 
-     if MyMemo.Lines.Count > 0 then
-        MyMemo.Lines[MyMemo.Lines.Count - 1] := __TextToAdd
-     else
-        MyMemo.Lines.Append(self.__TextToAdd);
+       for i := 1 to self._LastBufferLineNumber do
+          if MyMemo.Lines.Count > 0 then
+            MyMemo.Lines.Delete(MyMemo.Lines.Count - 1);
+
+       thisLine := self.MyMemo.Lines.Count;
+
+       self.MyMemo.Lines.Append(self.__TextToAdd+inttostr(_LastBufferLineNumber));
+       self._LastBufferLineNumber  := self.MyMemo.Lines.Count - thisLine;
    end
    else begin
-      MyMemo.Lines.Append(self.__TextToAdd);
+      self.MyMemo.Lines.Append(self.__TextToAdd);
+      self._LastBufferLineNumber  := self.MyMemo.Lines.Count - thisLine;
    end;
-  MyMemo.Lines.EndUpdate();
+
+  self.MyMemo.Lines.EndUpdate();
 end;
 
 procedure TMemoThr.PrintBuffer(const buffer: string);
@@ -126,9 +134,13 @@ begin
   ConvertedBuffer := WinCPToUTF8(buffer);
 
 
+
+
   // Checking if buffer matches line pattern to collapse. If matches many lines return only latest match
   lastRegexMatch := '';
   IdxOfCurrentPatternMatch := -1;
+
+
   for i := 0 to High(Self._RegexLinePatters) do
   begin
     if Self._RegexLinePatters[i].Exec(ConvertedBuffer) then
@@ -144,16 +156,20 @@ begin
     end;
   end;
 
-    // fixing new line sign
+  // fixing new line sign
   ConvertedBuffer := StringReplace(ConvertedBuffer, #10, #13#10, [rfReplaceAll]);
   ConvertedBuffer := StringReplace(ConvertedBuffer, #13#13#10, #13#10, [rfReplaceAll]);
 
 
+
   self.__TextToAdd:=ConvertedBuffer;
-  self.__DoReplaceBuffer:= ((IdxOfCurrentPatternMatch > -1) and (self._IdxOfPreviousPatternMatch = IdxOfCurrentPatternMatch)) ;
+  self.__DoReplaceBuffer:= ((IdxOfCurrentPatternMatch > -1)
+                           and (self._IdxOfPreviousPatternMatch = IdxOfCurrentPatternMatch)) ;
   self._IdxOfPreviousPatternMatch := IdxOfCurrentPatternMatch;
 
+
   TThread.Queue(nil,@Self.AppendBufferInMainThread);
+
 
 end;
 
@@ -161,8 +177,8 @@ procedure TMemoThr.Execute();
 var
   tempBuffer: string;
 begin
-
   try
+// --- Main stream reading loop ---	
     while (not self.Terminated) and Assigned(RE) and (not RE.IsStreamFinished()) do
     begin
       if (RE.Updated) or (RE._PipeFinished) then
@@ -174,9 +190,11 @@ begin
       end;
       sleep(200);
     end;
+//END --- Main stream reading loop ---	
 
-    MyMemo.Lines.Add('');
-    MyMemo.Lines.Add('< ...Task finished >');
+// --- After job done ---	
+    self.MyMemo.Lines.Add('');
+    self.MyMemo.Lines.Add('< ...Task finished >');
 
     if Assigned(_page) then
        _page.Caption := '✅ ' + _page.Caption;
@@ -192,22 +210,21 @@ begin
   end;
 end;
 
-function TMemoThr._DebugState(ShowMessage: boolean): string;
+function TMemoThr._DebugState(doShowMessage: boolean): string;
 begin
   Result := 'Is Process finished: ' + booltostr(RE.IsProcessFinished(), True);
   Result += #13#10 + 'Is Stream finished: ' + booltostr(RE.IsStreamFinished(), True);
   Result += #13#10 + 'Is Pipe finished: ' + booltostr(RE._PipeFinished, True);
   Result += #13#10 + 'RE Pos Tracker: ' + IntToStr(RE.StreamPosTracker);
-
+  if ( doShowMessage) then
+     ShowMessage(Result);
 end;
 
 procedure tMemoThr.StopAndTerminate();
 begin
   try
-
     self.Terminate();
     self.WaitFor();
-
   except
     on E: Exception do
     begin

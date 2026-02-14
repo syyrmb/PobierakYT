@@ -82,7 +82,7 @@ begin
 
   //TESTING PURPOSE
    //EditVideoURL.Text := 'https://www.youtube.com/watch?v=C0DPdy98e4c';
-   EditVideoURL.Text :='https://www.youtube.com/watch?v=UEQSkaqrMZA;'
+   //EditVideoURL.Text :='https://www.youtube.com/watch?v=UEQSkaqrMZA;'
 end;
 
 procedure TVideosFrame.radioExpertChange(Sender: TObject);

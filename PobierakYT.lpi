@@ -23,7 +23,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="1"/>
-      <MinorVersionNr Value="1"/>
+      <MinorVersionNr Value="2"/>
       <StringTable CompanyName="CelularBat" FileDescription="Retro-style yt-dlp GUI" InternalName="https://github.com/CelularBat/PobierakYT" LegalCopyright="GPLv3 https://www.gnu.org/licenses/gpl-3.0.html" ProductName="PobierakYT"/>
     </VersionInfo>
     <BuildModes>
