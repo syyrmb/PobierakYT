@@ -28,8 +28,15 @@ type
     s_YTdl_PATH: ansistring;
     s_FFMPG_FOLDER: ansistring;
     s_OutputFolder: ansistring;
+    s_Proxy: ansistring;
+    s_Cookiedir: ansistring;
+    s_JSruntimedir: ansistring;
     s_CustomOutputIdx: integer;
+    s_BrowserIdx: integer;
+    s_JSruntimeIdx: integer;
     s_UseCustomOutput: boolean;
+    s_UseCookie: boolean;
+    s_SetJSruntime: boolean;
     sg_AreDepsSet: boolean;
 
     s_CustomFormatStrings: TCustomFormatArray;
@@ -81,12 +88,19 @@ const
 
 
 implementation
+  uses
+    mainform;
 
 constructor TMySettings.Create();
 begin
   s_YTdl_PATH := '';
   s_FFMPG_FOLDER := '';
   s_OutputFolder := '';
+  s_Cookiedir := '';
+  s_OutputFolder := '';
+  s_JSruntimedir := '';
+  s_Proxy := '';
+
   s_UseCustomOutput := False;
 
   LoadSettings();
@@ -186,17 +200,35 @@ begin
   if DirectoryExists(tempPath) then
 	s_FFMPG_FOLDER := tempPath
   else
-	ShowMessage('Directory FFMG '+tempPath+' does not exist!');
+	ShowMessage('Directory FFMPEG '+tempPath+' does not exist!');
 	
   tempPath := Ini.ReadString('Main', 'OutputFolder', '');
   if DirectoryExists(tempPath) then
 	s_OutputFolder := tempPath
-  else
+  else if tempPath <> '' then
 	ShowMessage('Directory output '+tempPath+' does not exist!');
-  
 
+  tempPath := Ini.ReadString('Main', 'Cookiedir', '');
+      if DirectoryExists(tempPath) then
+	s_Cookiedir := tempPath;
+        AppGlobalSettings.G_CookieDir := tempPath;
+
+  tempPath := Ini.ReadString('Main', 'JSruntimedir', '');
+      if DirectoryExists(tempPath) then
+	s_JSruntimedir := tempPath;
+        AppGlobalSettings.G_JsDir:= tempPath;
+
+  s_Proxy := Ini.ReadString('Main', 'Proxy', '');
+  AppGlobalSettings.G_Proxy := Ini.ReadString('Main', 'Proxy', '');
   s_CustomOutputIdx := Ini.ReadInteger ('Main', 'CustomOutputIdx', -1);
+  s_BrowserIdx := Ini.ReadInteger ('Main', 'BrowserIdx', -1);
+  s_JSruntimeIdx := Ini.ReadInteger ('Main', 'JSruntimeIdx', -1);
+  AppGlobalSettings.G_JsIdx := Ini.ReadInteger ('Main', 'JSruntimeIdx', -1);
   s_UseCustomOutput := Ini.ReadBool ('Main', 'UseCustomOutput', False);
+  s_UseCookie := Ini.ReadBool ('Main', 'UseCookie', False);
+  s_SetJSruntime := Ini.ReadBool ('Main', 'SetJSruntime', False);
+  AppGlobalSettings.G_CookieEnabled := Ini.ReadBool ('Main', 'UseCookie', False);
+  AppGlobalSettings.G_JsEnabled := Ini.ReadBool ('Main', 'SetJSruntime', False);
   Ini.Free();
 end;
 
@@ -210,8 +242,15 @@ begin
       Ini.WriteString('Main', 'YTdl_PATH', s_YTdl_PATH);
       Ini.WriteString('Main', 'FFMPG_FOLDER', s_FFMPG_FOLDER);
       Ini.WriteString('Main', 'OutputFolder', s_OutputFolder);
+      Ini.WriteString('Main', 'Proxy', s_Proxy);
+      Ini.WriteString('Main', 'Cookiedir', s_Cookiedir);
+      Ini.WriteString('Main', 'JSruntimedir', s_JSruntimedir);
       Ini.WriteInteger('Main', 'CustomOutputIdx', s_CustomOutputIdx);
+      Ini.WriteInteger('Main', 'BrowserIdx', s_BrowserIdx);
+      Ini.WriteInteger('Main', 'JSruntimeIdx', s_JSruntimeIdx);
       Ini.WriteBool ('Main', 'UseCustomOutput', s_UseCustomOutput);
+      Ini.WriteBool ('Main', 'UseCookie', s_UseCookie);
+      Ini.WriteBool ('Main', 'SetJSruntime', s_SetJSruntime);
       Ini.UpdateFile();
     except
       on E: Exception do
