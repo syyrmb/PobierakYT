@@ -16,6 +16,12 @@ uses
 type
 
   { TForm1 }
+  TGlobalSettings = Record
+  G_Proxy, G_Browser, G_CookieDir, G_JsRuntime, G_JsDir: string;
+  G_JsIdx: shortint;
+  G_JsEnabled, G_CookieEnabled: Boolean;
+
+  end;
 
   TForm1 = class(TForm)
     btnClearTabMemo: TButton;
@@ -25,7 +31,7 @@ type
     PageControl1: TPageControl;
     PageControlConsole: TPageControl;
     ConsoleTab: TTabSheet;
-
+    FrameOptions: TFrameOptions;
 
     TabSingleVideo: TTabSheet;
 
@@ -46,10 +52,12 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
 
     procedure LoadTabs();
+    procedure PageControl1Change(Sender: TObject);
   end;
 
 var
   Form1: TForm1;
+  AppGlobalSettings: TGlobalSettings;
 
 implementation
 
@@ -120,6 +128,11 @@ begin
   VideosFrame.Align := alClient;
 
   TabSingleVideo.Free();
+
+end;
+
+procedure TForm1.PageControl1Change(Sender: TObject);
+begin
 
 end;
 
