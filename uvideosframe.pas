@@ -155,7 +155,7 @@ begin
   RunTab(EditVideoURL.Text + ' ' + parseArgs(), ' ⬇');
 end;
 
-Function PrCoJsChecks(out outputStr: string): Boolean;
+Function PrCoJsChecks(var outputStr: string): Boolean;
   begin
   //Validate proxy address using the function above, and add proxy setting if passed.
   if AppGlobalSettings.G_Proxy <> '' then
