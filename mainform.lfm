@@ -16,7 +16,7 @@ object Form1: TForm1
   OnKeyDown = FormKeyDown
   object PageControl1: TPageControl
     Left = 32
-    Height = 727
+    Height = 713
     Top = 8
     Width = 618
     ActivePage = TabVideos2

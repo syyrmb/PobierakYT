@@ -16,13 +16,6 @@ uses
 type
 
   { TForm1 }
-  TGlobalSettings = Record
-  G_Proxy, G_Browser, G_CookieDir, G_JsRuntime, G_JsDir: string;
-  G_JsIdx: shortint;
-  G_JsEnabled, G_CookieEnabled: Boolean;
-
-  end;
-
   TForm1 = class(TForm)
     btnClearTabMemo: TButton;
     btnCloseTab: TButton;
@@ -57,7 +50,6 @@ type
 
 var
   Form1: TForm1;
-  AppGlobalSettings: TGlobalSettings;
 
 implementation
 

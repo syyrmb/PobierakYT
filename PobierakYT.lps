@@ -3,15 +3,15 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Release"/>
     <Units>
       <Unit>
         <Filename Value="PobierakYT.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="8"/>
         <CursorPos X="5" Y="33"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -21,10 +21,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainForm"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="174"/>
-        <CursorPos X="5" Y="198"/>
-        <UsageCount Value="73"/>
+        <TopLine Value="33"/>
+        <CursorPos X="59" Y="45"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -32,7 +31,7 @@
         <Filename Value="runexternal.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="RunExternal"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="pobierak.engine.pas"/>
@@ -41,23 +40,23 @@
         <EditorIndex Value="3"/>
         <TopLine Value="73"/>
         <CursorPos X="80" Y="56"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pobierak.settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="400"/>
-        <CursorPos X="5" Y="425"/>
-        <UsageCount Value="73"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="221"/>
+        <CursorPos X="30" Y="229"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="copyttab.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="copyTTab"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="memothread.pas"/>
@@ -65,15 +64,15 @@
         <UnitName Value="MemoThread"/>
         <EditorIndex Value="1"/>
         <TopLine Value="128"/>
-        <CursorPos X="36" Y="138"/>
-        <UsageCount Value="73"/>
+        <CursorPos Y="138"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="debugutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="debugUtils"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="uoptionsframe.pas"/>
@@ -83,9 +82,9 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="UOptionsFrame"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="383"/>
-        <CursorPos X="5" Y="406"/>
-        <UsageCount Value="73"/>
+        <TopLine Value="66"/>
+        <CursorPos Y="78"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -96,7 +95,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="USingleVideoFrame"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="wcustomformatlist.pas"/>
@@ -105,7 +104,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="WCustomFormatList"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="customformatsform.pas"/>
@@ -114,10 +113,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="CustomFormatsForm"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="125"/>
         <CursorPos X="4"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -125,13 +124,13 @@
         <Filename Value="c_urlstatictext.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="c_URLStaticText"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="decorator_statictext_link.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="decorator_StaticText_Link"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="folderbuttonframeunit.pas"/>
@@ -140,7 +139,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FolderButtonFrameUnit"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="uvideosframe.pas"/>
@@ -149,10 +148,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="UVideosFrame"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="224"/>
-        <CursorPos X="107" Y="239"/>
-        <UsageCount Value="73"/>
+        <TopLine Value="289"/>
+        <CursorPos X="25" Y="303"/>
+        <UsageCount Value="77"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -160,19 +160,19 @@
         <Filename Value="pobierakcommontypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="pobierak.commonTypes"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="killprocesstree.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="KillProcessTree"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
       <Unit>
         <Filename Value="sendkillsignal.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SendKillSignal"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="77"/>
       </Unit>
     </Units>
     <RunParams>

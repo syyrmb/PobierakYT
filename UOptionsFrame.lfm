@@ -210,7 +210,7 @@ object FrameOptions: TFrameOptions
     object edtBrowserCookiePath: TEdit
       Left = 11
       Height = 28
-      Hint = 'If you don''t know your browser''s profile''s directory, '
+      Hint = 'For third party browser users, you need to select your browser''s Core browser in the Import Cookie combobox '#13#10'(e.g. a Librewolf user needs to select firefox first) and enter your browser''s directory for cookie here. If you '#13#10'don''t know this directory, please open your browser, type "about:profiles" and copy the "default-release" '#13#10'profile''s root directory to this textbox.'
       Top = 352
       Width = 445
       Enabled = False

@@ -75,8 +75,7 @@ type
 function DoesFileMaskExistInDir(const ADirectory, AFilenameMask: string): boolean;
 
 implementation
-  uses
-    mainform;
+
 {$R *.lfm}// This links to your UOptionsFrame.lfm file
 
 { TFrameOptions }
@@ -100,8 +99,23 @@ begin
   self.edtYtDlpBinary.Text := g_PobierakSettings.s_YTdl_PATH;
   self.edtOutputFolder.Text := g_PobierakSettings.s_OutputFolder;
   self.edtProxy.Text := g_PobierakSettings.s_Proxy;
-  self.edtBrowserCookiePath.Text := g_PobierakSettings.s_Cookiedir;
-  self.edtJsRuntimePath.Text := g_PobierakSettings.s_JSruntimedir;
+  if g_PobierakSettings.s_Cookiedir <> '' then
+    begin
+      self.edtBrowserCookiePath.Text := g_PobierakSettings.s_Cookiedir;
+    end
+  else
+    begin
+      self.edtBrowserCookiePath.Text := 'Browser' + #39 + 's profile directory (optional)';
+    end;
+
+  if g_PobierakSettings.s_JSruntimedir <> '' then
+    begin
+      self.edtJsRuntimePath.Text := g_PobierakSettings.s_JSruntimedir;
+    end
+  else
+    begin
+      self.edtJsRuntimePath.Text := 'JS Runtime' + #39 + 's directory (if not placed together with yt-dlp)';
+    end;
 
   self.FolderButtonFrame1.SetFolderPath(g_PobierakSettings.s_OutputFolder);
 
@@ -290,7 +304,8 @@ end;
 
 procedure TFrameOptions.edtBrowserCookiePathExit(Sender: TObject);
 begin
-  AppGlobalSettings.G_CookieDir := edtBrowserCookiePath.Text;
+  if directoryExists(edtBrowserCookiePath.Text) then
+    AppGlobalSettings.G_CookieDir := edtBrowserCookiePath.Text;
 end;
 
 function ProxyValidation(const AText: string): Boolean;

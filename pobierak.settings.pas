@@ -18,6 +18,12 @@ type
 type
   TCustomFormatArray = array of TCustomFormatString;
 
+type
+  TGlobalSettings = Record
+  G_Proxy, G_Browser, G_CookieDir, G_JsRuntime, G_JsDir: string;
+  G_JsIdx: shortint;
+  G_JsEnabled, G_CookieEnabled: Boolean;
+  end;
 
 type
   TMySettings = class
@@ -79,6 +85,7 @@ type
 
 var
   g_PobierakSettings: TMySettings;
+  AppGlobalSettings: TGlobalSettings;
 
 const
   INIFILE_NAME = 'PobierakYT_Settings.ini';
@@ -88,8 +95,6 @@ const
 
 
 implementation
-  uses
-    mainform;
 
 constructor TMySettings.Create();
 begin
@@ -210,13 +215,17 @@ begin
 
   tempPath := Ini.ReadString('Main', 'Cookiedir', '');
       if DirectoryExists(tempPath) then
+      begin
 	s_Cookiedir := tempPath;
         AppGlobalSettings.G_CookieDir := tempPath;
+      end;
 
   tempPath := Ini.ReadString('Main', 'JSruntimedir', '');
       if DirectoryExists(tempPath) then
+      begin
 	s_JSruntimedir := tempPath;
         AppGlobalSettings.G_JsDir:= tempPath;
+      end;
 
   s_Proxy := Ini.ReadString('Main', 'Proxy', '');
   AppGlobalSettings.G_Proxy := Ini.ReadString('Main', 'Proxy', '');

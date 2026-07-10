@@ -34,8 +34,7 @@ type
   end;
 
 implementation
-  uses
-    mainform;
+
 {$R *.lfm}
 
 { TSubtitlesFrame }
@@ -110,6 +109,7 @@ procedure TSubtitlesFrame.btnCheckSubsClick(Sender: TObject);
 var addargs: string;
   f_ignoreGlobalOutputFormat: boolean;
 begin
+  addargs := '';
   if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = '') then
     PrCoJsChecks(addargs);
     RunTab(edtSubtitlesURL.Text + ' --list-subs --simulate ' + addargs + g_PobierakSettings.ParseSettingsArgs(f_ignoreGlobalOutputFormat), 'FSub');

@@ -69,12 +69,11 @@ type
   private
 
   public
-    procedure PrCoJsChecks(var outputStr: string);
+    //procedure PrCoJsChecks(var outputStr: string);
   end;
 
 implementation
-  uses
-    mainform;
+
 constructor TVideosFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -126,14 +125,6 @@ begin
   EditVideoURL.SelectAll;
 end;
 
-
-
-procedure TVideosFrame.btnDownloadClick(Sender: TObject);
-begin
-  RunTab(EditVideoURL.Text + ' ' + parseArgs(), ' ⬇');
-end;
-
-
 {Function for validating if the proxy address entered in edtProxy TEdit box in
 the UOptions frame fits in the "xxx.xxx.xxx.xxx:xxxxx" format. The address can't
 start with "http://" or the like (maybe add support for it in the future).}
@@ -158,7 +149,13 @@ begin
   end;
 end;
 
-procedure TVideosFrame.PrCoJsChecks(var outputStr: string);
+procedure TVideosFrame.btnDownloadClick(Sender: TObject);
+begin
+  if ProxyValidation(AppGlobalSettings.G_Proxy) then
+  RunTab(EditVideoURL.Text + ' ' + parseArgs(), ' ⬇');
+end;
+
+Function PrCoJsChecks(out outputStr: string): Boolean;
   begin
   //Validate proxy address using the function above, and add proxy setting if passed.
   if AppGlobalSettings.G_Proxy <> '' then
@@ -166,17 +163,22 @@ procedure TVideosFrame.PrCoJsChecks(var outputStr: string);
       if ProxyValidation(AppGlobalSettings.G_Proxy) then
         begin
           outputStr := outputStr + ' --proxy ' + AppGlobalSettings.G_Proxy;
+          Result := True;
         end
       else
         begin
           ShowMessage('Please check the proxy address in Options tab. Only support IP:Port format (e.g., 127.0.0.1:10001), Adding "http://" or "https://" is not supported');
           Exit;
         end
+    end
+  else
+    begin
+      Result := True;
     end;
   //Adding Cookie parameters
   if AppGlobalSettings.G_CookieEnabled = true then
     begin
-      if AppGlobalSettings.G_CookieDir <> '' then
+      if (AppGlobalSettings.G_CookieDir <> '') and (directoryExists(AppGlobalSettings.G_CookieDir)) then
         begin
           outputStr += ' --cookies-from-browser ' + AppGlobalSettings.G_Browser + ':"' + AppGlobalSettings.G_CookieDir + '"';
         end
@@ -189,7 +191,7 @@ procedure TVideosFrame.PrCoJsChecks(var outputStr: string);
  make sure user's JS runtime selection is respected.}
   if AppGlobalSettings.G_JsEnabled = true then
     begin
-      if AppGlobalSettings.G_JsDir <> '' then
+      if (AppGlobalSettings.G_JsDir <> '') and (directoryExists(AppGlobalSettings.G_JsDir))then
         begin
           outputStr += ' --no-js-runtimes --js-runtimes ' + AppGlobalSettings.G_JsRuntime + ':"' + AppGlobalSettings.G_JsDir + '"';
         end
@@ -210,7 +212,7 @@ var addArgs: string;
 
 begin
 addArgs := ' -F';
-if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = '') then
+if PrCoJsChecks(addArgs) = True then
   begin
     PrCoJsChecks(addArgs);
     RunTab(EditVideoURL.Text + addArgs + g_PobierakSettings.ParseSettingsArgs(f_ignoreGlobalOutputFormat), 'Format');
@@ -218,6 +220,7 @@ if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = ''
 else
   begin
     ShowMessage('Please check the proxy address in Options tab. Only support IP:Port format (e.g., 127.0.0.1:10001), Addresses starting with things like "http://" or "https://" is not supported');
+    Exit;
   end;
 end;
 
@@ -229,7 +232,7 @@ var
   the problem that my newly added parameters were not being read in
   Get video info and Get format list.}
 begin
-if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = '') then
+if PrCoJsChecks(addArgs) = True then
   begin
     addArgs := ' --skip-download';
     addArgs += ' --get-title';
@@ -297,7 +300,7 @@ var
   i: integer;
   f_ignoreGlobalOutputFormat: boolean;
 begin
-  if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = '') then
+  if PrCoJsChecks(Result) then
   begin
   // quality settings
   Result := ' ' + parseQualitySetting() + ' ';
