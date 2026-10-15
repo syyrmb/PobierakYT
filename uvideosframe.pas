@@ -51,6 +51,7 @@ type
     radioExpert: TRadioButton;
     radioQuick: TRadioButton;
 
+    procedure cmbboxQuickQualityChange(Sender: TObject);
     constructor Create(AOwner: TComponent); override;
 
     procedure radioExpertChange(Sender: TObject);
@@ -81,9 +82,17 @@ begin
   g_PobierakSettings.UpdateComboBox_WithCFA(cmbboxCustomQuality, g_PobierakSettings.s_CustomFormatStrings);
   g_PobierakSettings.UpdateComboBox_WithCFA(cmbboxCustomCommands,g_PobierakSettings.s_CustomCommandsStrings);
 
+  //load setting
+  self.cmbboxQuickQuality.ItemIndex := g_PobierakSettings.s_Qset;
   //TESTING PURPOSE
    //EditVideoURL.Text := 'https://www.youtube.com/watch?v=C0DPdy98e4c';
    //EditVideoURL.Text :='https://www.youtube.com/watch?v=UEQSkaqrMZA;'
+end;
+
+procedure TVideosFrame.cmbboxQuickQualityChange(Sender: TObject);
+begin
+  g_PobierakSettings.s_Qset := cmbboxQuickQuality.ItemIndex;
+  AppGlobalSettings.G_Qset := cmbboxQuickQuality.ItemIndex;
 end;
 
 procedure TVideosFrame.radioExpertChange(Sender: TObject);
@@ -162,12 +171,12 @@ Function PrCoJsChecks(var outputStr: string): Boolean;
     begin
       if ProxyValidation(AppGlobalSettings.G_Proxy) then
         begin
-          outputStr := outputStr + ' --proxy ' + AppGlobalSettings.G_Proxy;
+          outputStr += ' --proxy ' + AppGlobalSettings.G_Proxy;
           Result := True;
         end
       else
         begin
-          ShowMessage('Please check the proxy address in Options tab. Only support IP:Port format (e.g., 127.0.0.1:10001), Adding "http://" or "https://" is not supported');
+          Result := False;
           Exit;
         end
     end

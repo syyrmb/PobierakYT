@@ -20,8 +20,8 @@ type
 
 type
   TGlobalSettings = Record
-  G_Proxy, G_Browser, G_CookieDir, G_JsRuntime, G_JsDir: string;
-  G_JsIdx: shortint;
+  G_Proxy, G_Browser, G_CookieDir, G_JsRuntime, G_JsDir, G_SubLang, G_SubFmt: string;
+  G_JsIdx, G_Qset, G_SubDl: shortint;
   G_JsEnabled, G_CookieEnabled: Boolean;
   end;
 
@@ -37,6 +37,10 @@ type
     s_Proxy: ansistring;
     s_Cookiedir: ansistring;
     s_JSruntimedir: ansistring;
+    s_SubLang: ansistring;
+    s_SubFormat: ansistring;
+    s_Qset: integer;
+    s_SubDl: integer;
     s_CustomOutputIdx: integer;
     s_BrowserIdx: integer;
     s_JSruntimeIdx: integer;
@@ -105,7 +109,8 @@ begin
   s_OutputFolder := '';
   s_JSruntimedir := '';
   s_Proxy := '';
-
+  s_SubLang:= '';
+  s_SubFormat:= '';
   s_UseCustomOutput := False;
 
   LoadSettings();
@@ -228,16 +233,25 @@ begin
       end;
 
   s_Proxy := Ini.ReadString('Main', 'Proxy', '');
-  AppGlobalSettings.G_Proxy := Ini.ReadString('Main', 'Proxy', '');
+  AppGlobalSettings.G_Proxy := s_Proxy;
+  s_SubLang := Ini.ReadString('Main', 'SubtitleLang', '');
+  AppGlobalSettings.G_SubLang := s_SubLang;
+  s_SubFormat := Ini.ReadString('Main', 'SubtitleFormat', '');
+  AppGlobalSettings.G_SubFmt := s_SubFormat;
   s_CustomOutputIdx := Ini.ReadInteger ('Main', 'CustomOutputIdx', -1);
   s_BrowserIdx := Ini.ReadInteger ('Main', 'BrowserIdx', -1);
   s_JSruntimeIdx := Ini.ReadInteger ('Main', 'JSruntimeIdx', -1);
-  AppGlobalSettings.G_JsIdx := Ini.ReadInteger ('Main', 'JSruntimeIdx', -1);
+  AppGlobalSettings.G_JsIdx := s_JSruntimeIdx;
+  s_Qset := Ini.ReadInteger('Main', 'QuickSettings', -1);
+  AppGlobalSettings.G_Qset := s_Qset;
+  s_SubDl := Ini.ReadInteger('Main', 'SubtitleDownload', 0);
+  AppGlobalSettings.G_SubDl := s_SubDl;
   s_UseCustomOutput := Ini.ReadBool ('Main', 'UseCustomOutput', False);
   s_UseCookie := Ini.ReadBool ('Main', 'UseCookie', False);
   s_SetJSruntime := Ini.ReadBool ('Main', 'SetJSruntime', False);
   AppGlobalSettings.G_CookieEnabled := Ini.ReadBool ('Main', 'UseCookie', False);
   AppGlobalSettings.G_JsEnabled := Ini.ReadBool ('Main', 'SetJSruntime', False);
+
   Ini.Free();
 end;
 
@@ -257,9 +271,13 @@ begin
       Ini.WriteInteger('Main', 'CustomOutputIdx', s_CustomOutputIdx);
       Ini.WriteInteger('Main', 'BrowserIdx', s_BrowserIdx);
       Ini.WriteInteger('Main', 'JSruntimeIdx', s_JSruntimeIdx);
+      Ini.WriteInteger('Main', 'QuickSettings', s_Qset);
+      Ini.WriteInteger('Main', 'SubtitleDownload', s_SubDl);
       Ini.WriteBool ('Main', 'UseCustomOutput', s_UseCustomOutput);
       Ini.WriteBool ('Main', 'UseCookie', s_UseCookie);
       Ini.WriteBool ('Main', 'SetJSruntime', s_SetJSruntime);
+      Ini.WriteString('Main', 'SubtitleLang', s_SubLang);
+      Ini.WriteString('Main', 'SubtitleFormat', s_SubFormat);
       Ini.UpdateFile();
     except
       on E: Exception do

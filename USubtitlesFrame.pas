@@ -26,8 +26,11 @@ type
     RadioGroupSubs: TRadioGroup;
     procedure btnCheckSubsClick(Sender: TObject);
     procedure btnDownloadSubClick(Sender: TObject);
-
-
+    procedure edtSubFormatChangeBounds(Sender: TObject);
+    procedure edtSubLangChangeBounds(Sender: TObject);
+    procedure LoadSettingsIntoGUI();
+    constructor Create(AOwner: TComponent);
+    procedure RadioGroupSubsSelectionChanged(Sender: TObject);
   private
   public
     procedure PrCoJsChecks(var outputStr: string);
@@ -42,6 +45,24 @@ implementation
 {Function for validating if the proxy address entered in edtProxy TEdit box in
 the UOptions frame fits in the "xxx.xxx.xxx.xxx:xxxxx" format. The address can't
 start with "http://" or the like (maybe add support for it in the future).}
+constructor TSubtitlesFrame.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  self.LoadSettingsIntoGUI();
+end;
+
+procedure TSubtitlesFrame.RadioGroupSubsSelectionChanged(Sender: TObject);
+begin
+  g_PobierakSettings.s_SubDl := RadioGroupSubs.ItemIndex;
+end;
+
+procedure TSubtitlesFrame.LoadSettingsIntoGUI();
+begin
+  self.RadioGroupSubs.ItemIndex := g_PobierakSettings.s_SubDl;
+  self.edtSubLang.text := g_PobierakSettings.s_SubLang;
+  self.edtSubFormat.text := g_PobierakSettings.s_SubFormat;
+end;
+
 function ProxyValidation(const AText: string): Boolean;
 var
   Regex: TRegExpr;
@@ -123,20 +144,36 @@ begin
   subs_args := edtSubtitlesURL.Text;
   if ProxyValidation(AppGlobalSettings.G_Proxy) or (AppGlobalSettings.G_Proxy = '') then
     PrCoJsChecks(subs_args);
-  if (Length(edtSubLang.Text) > 0) then
+  if (Length(edtSubFormat.Text) > 0) then
     subs_args += ' --sub-format ' + edtSubFormat.Text
   else
     subs_args += ' --sub-format "best"';
-    subs_args += ' --sub-langs ' + edtSubLang.Text;
-  if (RadioGroupSubs.ItemIndex = 0) then
-    subs_args += ' --write-subs'
+  if (Length(edtSubLang.Text) > 0) then
+    subs_args += ' --sub-langs' + edtSubLang.Text + ',-live_chat"'
   else
-    subs_args += ' --write-auto-subs';
-  subs_args += ' --skip-download ';
+    subs_args += ' --sub-langs ".+-orig"';
+  case RadioGroupSubs.ItemIndex of
+    0: subs_args += ' --write-subs';
+    1: subs_args += ' --write-auto-subs';
+    2: subs_args += ' --write-subs --write-auto-subs';
+  end;
+  subs_args += ' --skip-download';
   subs_args += ' -o "subs/%(uploader)s_%(title)s.%(ext)s"';
   subs_args += g_PobierakSettings.ParseSettingsArgs(True);
 
   RunTab(subs_args, [subs_args, 'Downloading subtitles:'], 'Subs');
+end;
+
+procedure TSubtitlesFrame.edtSubFormatChangeBounds(Sender: TObject);
+begin
+  g_PobierakSettings.s_SubFormat := edtSubFormat.text;
+  AppGlobalSettings.G_SubFmt := edtSubFormat.text;
+end;
+
+procedure TSubtitlesFrame.edtSubLangChangeBounds(Sender: TObject);
+begin
+  g_PobierakSettings.s_SubLang := edtSubLang.text;
+  AppGlobalSettings.G_SubLang := edtSubLang.text;
 end;
 
 

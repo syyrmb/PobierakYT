@@ -107,6 +107,7 @@ object VideosFrame: TVideosFrame
         ReadOnly = True
         TabOrder = 0
         Text = 'Choose Quality'
+        OnChange = cmbboxQuickQualityChange
       end
     end
     object GroupBox3: TGroupBox
